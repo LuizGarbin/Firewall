@@ -17,24 +17,16 @@
 #
 novofirewall(){
 clear
-echo "sudo iptables -F" > firewall.config ## Salva no arquivo firewall.config a regra do iptables que remove
-suas regras atuais
-echo "sudo iptables -X" >> firewall.config ## Salva no arquivo firewall.config a regra do iptables que
-remove as regras do usuario
+echo "sudo iptables -F" > firewall.config ## Salva no arquivo firewall.config a regra do iptables que remove suas regras atuais
+echo "sudo iptables -X" >> firewall.config ## Salva no arquivo firewall.config a regra do iptables que remove as regras do usuario
 echo "sudo iptables -P INPUT DROP" >> firewall.config
-## Salva no arquivo firewall.config a regra do
-iptables que bloqueia todas as entradas
-echo "sudo iptables -P FORWARD DROP" >> firewall.config ## Salva no arquivo firewall.config a regra do
-iptables que bloqueia os redirecionamentos
-echo "sudo iptables -P OUTPUT DROP" >> firewall.config ## Salva no arquivo firewall.config a regra do
-iptables que bloqueia a saida de pacotes
-echo "sudo iptables -A OUTPUT -m state --state ESTABLISHED -j ACCEPT" >> firewall.config ## Salva no
-arquivo firewall.config a regra do iptables que torna o firewall statefull
-echo "sudo iptables -A INPUT -m limit --limit 1/s --limit-burst 4 -j ACCEPT LOG --log-prefix="L DOS" --log-
-level=info" >> firewall.config
+## Salva no arquivo firewall.config a regra do iptables que bloqueia todas as entradas
+echo "sudo iptables -P FORWARD DROP" >> firewall.config ## Salva no arquivo firewall.config a regra do iptables que bloqueia os redirecionamentos
+echo "sudo iptables -P OUTPUT DROP" >> firewall.config ## Salva no arquivo firewall.config a regra do iptables que bloqueia a saida de pacotes
+echo "sudo iptables -A OUTPUT -m state --state ESTABLISHED -j ACCEPT" >> firewall.config ## Salva no arquivo firewall.config a regra do iptables que torna o firewall statefull
+echo "sudo iptables -A INPUT -m limit --limit 1/s --limit-burst 4 -j ACCEPT LOG --log-prefix="L DOS" --log-level=info" >> firewall.config
 echo "sudo iptables -A In_RULE_0 -j LOG --log-level-info --log-prefix "RULE_0 -- Bloqueada" " >> firewall.config
-echo "sudo iptables -A INPUT -p icmp -m limit --limit 2/second --limit-burst 2 -j LOG --log-prefix="B
-SMURF" --log-level=info" >> firewall.config
+echo "sudo iptables -A INPUT -p icmp -m limit --limit 2/second --limit-burst 2 -j LOG --log-prefix="BSMURF" --log-level=info" >> firewall.config
 echo "sudo iptables -A INPUT -i lo -j ACCEPT" >> firewall.config ## Salva no arquivo firewall.config a regra do iptables que libera o loopback
 echo "sudo iptables -A OUTPUT -o lo -j ACCEPT" >> firewall.config ## Salva no arquivo firewall.config a regra do iptables que libera o loopback
 echo "sudo iptables -A OUTPUT -p icmp -j ACCEPT" >> firewall.config ## Salva no arquivo firewall.config a regra do iptables que libera a saida do PING
@@ -625,8 +617,7 @@ echo
 echo "Digite nome do usuario que deseja criar"
 read name ## recebimento do valor do nome do usuario para a criação
 check
-cut -f1 -d: /etc/passwd | grep -wi $name>/dev/null ## separando o /etc/passwd pelos ":" | procurando o
-nome do usuario neste arquivo e direcionando para /dev/null
+cut -f1 -d: /etc/passwd | grep -wi $name>/dev/null ## separando o /etc/passwd pelos ":" | procurando o nome do usuario neste arquivo e direcionando para /dev/null
 if [ $? = "0" ];then ## verificando se o comando anterior deu erro.
 echo "### ERRO usuario especificado ja existe ###"
 echo
